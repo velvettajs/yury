@@ -1,3 +1,4 @@
+import type { Pool, PoolClient } from '@neondatabase/serverless';
 import type BaseClient from '#lib/BaseClient.js';
 import type { PermissionsString } from 'discord.js';
 import type { EventEmitter } from 'node:events';
@@ -9,8 +10,8 @@ declare global {
 		owners: string[];
 		debug: boolean;
 		defaultPermissions: PermissionsString[];
+		dbUri: string;
 	}
-
 	interface CommandOptions {
 		name: string;
 		description?: string;
