@@ -10,6 +10,8 @@ declare global {
 		owners: string[];
 		debug: boolean;
 		defaultPermissions: PermissionsString[];
+	}
+	interface DatabaseOptions {
 		dbUri: string;
 	}
 	interface CommandOptions {
@@ -21,6 +23,10 @@ declare global {
 		context?: boolean;
 		guildOnly?: boolean;
 		ownerOnly?: boolean;
+	}
+
+	interface DatabaseOptions {
+		dbUri: string;
 	}
 
 	interface EventOptions {
@@ -49,7 +55,11 @@ declare global {
 			date: Date;
 		};
 	}
-
+	interface ISubscription {
+		name: string;
+		key: string;
+		expires: Date | number;
+	}
 	interface IUser {
 		id: string;
 		name: string | null;

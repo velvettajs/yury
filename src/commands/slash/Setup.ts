@@ -1,13 +1,21 @@
 import type BaseClient from '#lib/BaseClient.js';
 import Command from '#lib/structures/Command.js';
 import type { ChatInputCommandInteraction, TextChannel, NewsChannel } from 'discord.js';
-
+import { servers } from '#lib/models/Servers.js';
+import { webhooks } from '#lib/models/Webhooks.js';
+import DatabaseClient from '#lib/DatabaseClient.js';
+import { Database as Configuration } from '#lib/Configuration.js';
+import { eq } from "drizzle-orm";
+import { type NeonHttpDatabase } from 'drizzle-orm/neon-http';
 export default class extends Command {
+	private db: NeonHttpDatabase<Record<string, never>>;
+
 	public constructor(client: BaseClient) {
 		super(client, {
 			name: 'setup',
 			description: 'Setup this server'
 		});
+		this.db = new DatabaseClient(Configuration).getDb();
 	}
 
 	public async execute(interaction: ChatInputCommandInteraction<'cached' | 'raw'>) {
@@ -24,19 +32,11 @@ export default class extends Command {
 			'latina',
 			'feet'
 		];
-		const webhooks: { channel_tag: string; webhook_url: string }[] = [];
-
+		const server_id = interaction.guild?.id as string;
 		try {
-			// Check if the server is already registered
-			const existingServer = await this.client.queryDatabase(`SELECT * FROM servers WHERE server_id = $1`, [
-				interaction.guild?.id
-			]);
-			if (Array.isArray(existingServer) && existingServer.length > 0) {
-				return interaction.reply({ content: 'This server has already been set up.' });
-			}
-
-			// Insert the server ID into the servers table
-			await this.client.queryDatabase(`INSERT INTO servers (server_id) VALUES ($1)`, [interaction.guild?.id]);
+			const existingServer = await this.db.select().from(servers).where(eq(servers.server_id, server_id));
+			if (existingServer.length > 0) return interaction.reply({ content: 'This server has already been set up.' });
+			await this.db.insert(servers).values({ server_id });
 		} catch (error) {
 			console.error('Database query error:', error);
 			return interaction.reply({ content: 'Failed to register the server in the database.' });
@@ -45,7 +45,7 @@ export default class extends Command {
 		for (const channelName of channelNames) {
 			try {
 				const channel = (await interaction.guild?.channels.create({
-					name: channelName,
+					name: `・🍑┇${channelName}`,
 					reason: 'Setup server channels'
 				})) as TextChannel | NewsChannel;
 				const webhook = await channel.createWebhook({
@@ -53,13 +53,11 @@ export default class extends Command {
 					reason: 'Setup server webhooks'
 				});
 
-				webhooks.push({ channel_tag: channelName, webhook_url: webhook.url });
-
-				// Insert the webhook into the webhooks table
-				await this.client.queryDatabase(
-					`INSERT INTO webhooks (server_id, webhook_url, channel_tag) VALUES ($1, $2, $3)`,
-					[interaction.guild?.id, webhook.url, channelName]
-				);
+				await this.db.insert(webhooks).values({
+					server_id,
+					channel_tag: channelName,
+					webhook_url: webhook.url
+				});
 			} catch (error) {
 				console.error(`Error creating channel or webhook for ${channelName}:`, error);
 				return interaction.reply({ content: `Failed to setup the server. Error with channel ${channelName}.` });

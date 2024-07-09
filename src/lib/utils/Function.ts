@@ -1,6 +1,9 @@
-import { discordApi } from '#lib/Configuration.js';
+import { createHash, randomUUID } from 'node:crypto';
 import type { AutocompleteInteraction, CommandInteraction } from 'discord.js';
 import axios from 'axios';
+
+const API_URL: Readonly<string> = 'https://discord.com/api/v9';
+const PLANS: ReadonlyArray<string> = ['lifetime', 'monthly', 'annual'];
 
 const emojis: { [key: string]: string } = {
 	verified_developer: `<:verified_developer:1127326470793084958>`,
@@ -33,7 +36,7 @@ const icons: { [key: string]: string } = {
 export async function getUser(id: string): Promise<IUser | undefined> {
 	if (!id) throw Error('ID Invalid!');
 	try {
-		const { data } = await axios.get(`${discordApi}/users/${id}/profile`, {
+		const { data } = await axios.get(`${API_URL}/users/${id}/profile`, {
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: process.env.DISCORD_SYSTEM_TOKEN as string
@@ -125,7 +128,7 @@ function getBoost(
 		emoji: icons['guild_booster_lvl' + boost[1]],
 		date: getActualDate(new Date(guild_since))
 	};
-	const nextDate = boost[1] && getNextDate(new Date(guild_since), parseInt(boost[1]));
+	const nextDate = (boost[1] && getNextDate(new Date(guild_since), parseInt(boost[1]))) || undefined;
 	const boost_up =
 		boost[1] && nextDate
 			? {
@@ -138,6 +141,34 @@ function getBoost(
 		boost_actual,
 		boost_up
 	} as IPremium;
+}
+
+const encodeHash = (id: string): string => {
+	const hash = createHash('sha256');
+	const key = hash.update(id).digest('hex');
+	return key;
+};
+
+const getExpire = (plan: string): Date | number => {
+	const date = new Date();
+	if (plan === PLANS[0]) return Infinity;
+	if (plan === PLANS[1]) return date.setMonth(date.getMonth() + 1);
+	if (plan === PLANS[2]) return date.setFullYear(date.getFullYear() + 1);
+	return date;
+};
+
+export function getSubscription(plan: string): ISubscription {
+	if (!plan) throw Error('No plan');
+	if (!plan || !PLANS.includes(plan)) throw Error('No plan valid');
+	const key = encodeHash(randomUUID());
+	const expires = getExpire(plan);
+
+	const subscription: ISubscription = {
+		name: plan,
+		key,
+		expires
+	};
+	return subscription;
 }
 
 export function formatArray(
