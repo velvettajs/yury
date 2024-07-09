@@ -13,7 +13,7 @@ export default class extends Event {
 
 	public run() {
 		this.client.user.setPresence({
-			activities: [{ name: `lxv`, type: ActivityType.Streaming, url: 'https://twitch.tv/xqc' }],
+			activities: [{ name: `Verifying users`, type: ActivityType.Streaming, url: 'https://twitch.tv/xqc' }],
 			status: 'idle'
 		});
 

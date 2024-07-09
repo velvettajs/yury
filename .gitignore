@@ -126,8 +126,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-src/lib/utils/ochoa/__pycache__/Scrapper.cpython-310.pyc
-package-lock.json
-pnpm-lock.yaml
-pnpm-lock.yaml
+
+# Ignorar archivos específicos
 .env
+pnpm-lock.yaml
+package-lock.json
+src/lib/utils/ochoa/__pycache__/Scrapper.cpython-310.pyc

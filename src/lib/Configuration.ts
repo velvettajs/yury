@@ -8,3 +8,4 @@ export const debug = process.env.DEBUG_MODE === 'true';
 export const defaultPermissions = ['SendMessages', 'ViewChannel'] as PermissionsString[];
 export const discordApi = 'https://discord.com/api/v9' as string;
 export const webiste = 'www.lovver.lat' as string;
+export const dbUri = process.env.DATABASE_URL as string;
