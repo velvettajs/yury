@@ -127,5 +127,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-#env files
+#env
 .env
+
+pnpm-lock.yaml
