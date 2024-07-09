@@ -127,7 +127,8 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-#env
+# Ignorar archivos específicos
 .env
-
 pnpm-lock.yaml
+package-lock.json
+src/lib/utils/ochoa/__pycache__/Scrapper.cpython-310.pyc
