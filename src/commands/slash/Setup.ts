@@ -7,6 +7,7 @@ import DatabaseClient from '#lib/DatabaseClient.js';
 import { Database as Configuration } from '#lib/Configuration.js';
 import { eq } from "drizzle-orm";
 import { type NeonHttpDatabase } from 'drizzle-orm/neon-http';
+import { tags } from '#lib/models/Tags.js';
 export default class extends Command {
 	private db: NeonHttpDatabase<Record<string, never>>;
 
@@ -19,19 +20,9 @@ export default class extends Command {
 	}
 
 	public async execute(interaction: ChatInputCommandInteraction<'cached' | 'raw'>) {
-		const channelNames = [
-			'goth',
-			'threesome',
-			'orgies',
-			'twerk',
-			'hardcore',
-			'lesbians',
-			'milf',
-			'hentai',
-			'asian',
-			'latina',
-			'feet'
-		];
+
+		const channelNames: { name: string }[] = await this.db.select({ name: tags.name }).from(tags)
+
 		const server_id = interaction.guild?.id as string;
 		try {
 			const existingServer = await this.db.select().from(servers).where(eq(servers.server_id, server_id));
@@ -42,25 +33,25 @@ export default class extends Command {
 			return interaction.reply({ content: 'Failed to register the server in the database.' });
 		}
 
-		for (const channelName of channelNames) {
+		for (const { name } of channelNames) {
 			try {
 				const channel = (await interaction.guild?.channels.create({
-					name: `・🍑┇${channelName}`,
+					name: `・🍑┇${name}`,
 					reason: 'Setup server channels'
 				})) as TextChannel | NewsChannel;
 				const webhook = await channel.createWebhook({
-					name: `${channelName} webhook`,
+					name: `${name} webhook`,
 					reason: 'Setup server webhooks'
 				});
 
 				await this.db.insert(webhooks).values({
 					server_id,
-					channel_tag: channelName,
+					tag: name,
 					webhook_url: webhook.url
 				});
 			} catch (error) {
-				console.error(`Error creating channel or webhook for ${channelName}:`, error);
-				return interaction.reply({ content: `Failed to setup the server. Error with channel ${channelName}.` });
+				console.error(`Error creating channel or webhook for ${name}:`, error);
+				return interaction.reply({ content: `Failed to setup the server. Error with channel ${name}.` });
 			}
 		}
 

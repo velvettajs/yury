@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "lint": "eslint . --ext mjs,js,ts --fix",
+    "drizzle:push": "drizzle-kit push",
     "format": "prettier --write .",
     "register": "node dist/interactions/register.js -g",
     "build": "rimraf ./dist && swc ./src --out-dir ./dist --copy-files",

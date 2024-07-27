@@ -32,6 +32,7 @@ async function loadCommands(): Promise<object[]> {
 		for (const interactionFile of interactions) {
 			const { default: interaction } = await import(pathToFileURL(interactionFile).toString());
 			commands.push(interaction);
+			console.log(interaction)
 		}
 	});
 
