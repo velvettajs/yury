@@ -6,7 +6,7 @@ export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
 			name: 'help',
-			description: 'Shows help information and commands.'
+			description: 'Shows help information and commands.',
 		});
 	}
 

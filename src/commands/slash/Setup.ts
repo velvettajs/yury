@@ -14,7 +14,7 @@ export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
 			name: 'setup',
-			description: 'Setup this server'
+			description: 'Setup this server',
 		});
 		this.db = new DatabaseClient(Configuration).getDb();
 	}

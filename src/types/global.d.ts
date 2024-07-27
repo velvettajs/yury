@@ -23,6 +23,12 @@ declare global {
 		context?: boolean;
 		guildOnly?: boolean;
 		ownerOnly?: boolean;
+		options?: {
+			type: number;
+			name: string;
+			description: string;
+			required?: boolean
+		}[]
 	}
 
 	interface DatabaseOptions {

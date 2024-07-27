@@ -1,5 +1,5 @@
 import { createHash, randomUUID } from 'node:crypto';
-import type { AutocompleteInteraction, CommandInteraction } from 'discord.js';
+import { type AutocompleteInteraction, type CommandInteraction } from 'discord.js';
 import axios from 'axios';
 
 const API_URL: Readonly<string> = 'https://discord.com/api/v9';

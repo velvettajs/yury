@@ -36,4 +36,8 @@ export default abstract class Command {
 	public autocomplete(interaction: AutocompleteInteraction<'cached' | 'raw'>): Awaitable<unknown> {
 		throw new Error(`${this.name} doesn't provide a autocomplete method!`);
 	}
+
+	public success(interaction: CommandInteraction<'cached' | 'raw'>, msg: string) {
+		return interaction.reply({ content: msg });
+	  }
 }
