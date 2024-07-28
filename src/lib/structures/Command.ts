@@ -4,6 +4,7 @@ import {
 	BitField,
 	CommandInteraction,
 	PermissionsBitField,
+	EmbedBuilder,
 	type PermissionsString
 } from 'discord.js';
 import type { Awaitable } from '@discordjs/util';
@@ -38,6 +39,11 @@ export default abstract class Command {
 	}
 
 	public success(interaction: CommandInteraction<'cached' | 'raw'>, msg: string) {
-		return interaction.reply({ content: msg });
-	  }
+		const embed = new EmbedBuilder().setColor('Green').setDescription(msg);
+		return interaction.reply({ embeds: [embed] });
+	}
+	public error(interaction: CommandInteraction<'cached' | 'raw'>, msg: string) {
+		const embed = new EmbedBuilder().setColor('Red').setDescription(msg);
+		return interaction.reply({ embeds: [embed] });
+	}
 }

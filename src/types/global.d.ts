@@ -27,8 +27,8 @@ declare global {
 			type: number;
 			name: string;
 			description: string;
-			required?: boolean
-		}[]
+			required?: boolean;
+		}[];
 	}
 
 	interface DatabaseOptions {
@@ -41,40 +41,30 @@ declare global {
 		emitter?: keyof BaseClient | EventEmitter;
 	}
 
-	interface IBadge {
-		emoji: string;
-		name: string;
+	interface WebhookType {
+		tag: string;
+		webhook_url: string;
+		server_id: string;
 	}
 
-	interface IAccount {
-		type: string;
-		username: string;
-	}
-
-	interface IPremium {
-		boost_actual: {
-			emoji: string;
-			date: string;
-		};
-		boost_up?: {
-			emoji: string;
-			date: Date;
-		};
-	}
-	interface ISubscription {
-		name: string;
-		key: string;
-		expires: Date | number;
-	}
-	interface IUser {
+	interface VideoType {
 		id: string;
-		name: string | null;
-		username: string;
-		legacy_username?: string;
-		pronouns: string;
+		x_url: string;
+		preview: string;
+		tag: string;
+	}
+
+	interface GirlType {
+		name: string;
 		avatar: string;
-		badges: IBadge[] | null;
-		accounts: IAccount[];
-		premium?: IPremium;
+	}
+
+	interface TagType {
+		id: string;
+		name: string;
+	}
+
+	interface ServerType {
+		server_id: string;
 	}
 }
