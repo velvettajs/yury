@@ -1,7 +1,7 @@
-import { pgTable, varchar, uuid } from "drizzle-orm/pg-core";
+import { pgTable, text, uuid } from 'drizzle-orm/pg-core';
 
 export const girls = pgTable('girls', {
-    id: uuid('id').primaryKey().defaultRandom(),
-    name: varchar('name').notNull(),
-    avatar: varchar('avatar').notNull()
-})
+	id: uuid('id').primaryKey().defaultRandom(),
+	name: text('name').notNull(),
+	avatar: text('avatar').notNull()
+});
