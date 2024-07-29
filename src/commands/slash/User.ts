@@ -55,7 +55,7 @@ export default class extends Command {
 		});
 		return this.success(interaction, `User \`${username}\` successfully added.`);
 	}
-	
+
 	private async removeUser(
 		interaction: ChatInputCommandInteraction<'cached' | 'raw'>,
 		userId: string,
@@ -67,13 +67,21 @@ export default class extends Command {
 		return this.success(interaction, `User \`${userName}\` successfully removed.`);
 	}
 	public override async autocomplete(interaction: AutocompleteInteraction<'cached' | 'raw'>) {
-		const focusedOption = interaction.options.getFocused(true);
-		if (focusedOption.name === 'option') {
-			const options = ['add', 'list', 'remove'];
-			const filteredOptions = options
-				.filter((option) => option.toLowerCase().startsWith(focusedOption.value.toLowerCase()))
-				.slice(0, 25);
-			await interaction.respond(filteredOptions.map((option) => ({ name: option, value: option })));
-		}
-	}
+        const focusedOption = interaction.options.getFocused(true);
+        const option = interaction.options.getString('option');
+
+        if (option === 'remove' && focusedOption.name === 'user') {
+            const allUsers = await this.db.select().from(users);
+            const filteredUsers = allUsers
+                .filter(user => user.username.toLowerCase().startsWith(focusedOption.value.toLowerCase()))
+                .slice(0, 25);
+            await interaction.respond(filteredUsers.map(user => ({ name: user.username, value: user.username })));
+        } else if (focusedOption.name === 'option') {
+            const options = ['add', 'remove', 'list'];
+            const filteredOptions = options
+                .filter(option => option.toLowerCase().startsWith(focusedOption.value.toLowerCase()))
+                .slice(0, 25);
+            await interaction.respond(filteredOptions.map(option => ({ name: option, value: option })));
+        }
+    }
 }

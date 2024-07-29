@@ -36,8 +36,8 @@ export default class extends Command {
 	}
 	private async listTags(interaction: ChatInputCommandInteraction<'cached' | 'raw'>) {
 		const listTags = await this.db.select().from(tags);
-		const list = listTags.map((t) => t.name).join('\n') || 'No tags available.';
-		return interaction.reply({ content: `${list}` });
+		const list = listTags.map((t, i) => `\`${i + 1}\`. **${t.name}**`).join('\n') || 'No tags available.';
+		return this.success(interaction, list)
 	}
 	private async createTag(interaction: ChatInputCommandInteraction<'cached' | 'raw'>, tagName: string | null) {
 		if (!tagName) return this.error(interaction, 'You must provide a tag name.');
@@ -54,13 +54,21 @@ export default class extends Command {
 		return this.success(interaction, `Tag \`${tagName}\` deleted successfully.`);
 	}
 	public override async autocomplete(interaction: AutocompleteInteraction<'cached' | 'raw'>) {
-		const focusedOption = interaction.options.getFocused(true);
-		if (focusedOption.name === 'option') {
-			const options = ['create', 'list', 'delete'];
-			const filteredOptions = options
-				.filter((option) => option.toLowerCase().startsWith(focusedOption.value.toLowerCase()))
-				.slice(0, 25);
-			await interaction.respond(filteredOptions.map((option) => ({ name: option, value: option })));
-		}
-	}
+        const focusedOption = interaction.options.getFocused(true);
+        const option = interaction.options.getString('option');
+
+        if (option === 'delete' && focusedOption.name === 'name') {
+            const allTags = await this.db.select().from(tags);
+            const filteredTags = allTags
+                .filter(tag => tag.name.toLowerCase().startsWith(focusedOption.value.toLowerCase()))
+                .slice(0, 25);
+            await interaction.respond(filteredTags.map(tag => ({ name: tag.name, value: tag.name })));
+        } else if (focusedOption.name === 'option') {
+            const options = ['create', 'delete', 'list'];
+            const filteredOptions = options
+                .filter(option => option.toLowerCase().startsWith(focusedOption.value.toLowerCase()))
+                .slice(0, 25);
+            await interaction.respond(filteredOptions.map(option => ({ name: option, value: option })));
+        }
+    }
 }
