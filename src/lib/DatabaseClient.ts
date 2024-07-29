@@ -1,7 +1,7 @@
 import { neon } from '@neondatabase/serverless';
 import { drizzle, type NeonHttpDatabase } from 'drizzle-orm/neon-http';
-
-export default class DatabaseClient {
+import { Database as Configuration } from './Configuration';
+class DatabaseClient {
 	private db: NeonHttpDatabase<Record<string, never>>;
 
 	constructor(options: DatabaseOptions) {
@@ -13,3 +13,5 @@ export default class DatabaseClient {
 		return this.db;
 	}
 }
+
+export default new DatabaseClient(Configuration).getDb();

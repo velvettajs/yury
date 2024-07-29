@@ -35,6 +35,15 @@ declare global {
 		dbUri: string;
 	}
 
+	interface CdnOptions {
+		region: string;
+		endpoint: string;
+		credentials: {
+			accessKeyId: string;
+			secretAccessKey: string;
+		};
+	}
+
 	interface EventOptions {
 		name: string;
 		once?: boolean;
