@@ -1,7 +1,7 @@
 import { type APIApplicationCommand, ApplicationCommandOptionType, ApplicationCommandType } from 'discord-api-types/v10';
 
 export default {
-	name: 'add',
+	name: 'user',
 	description: 'Create a tag in database.',
 	type: ApplicationCommandType.ChatInput,
 	dm_permission: true,
@@ -10,19 +10,14 @@ export default {
             type: ApplicationCommandOptionType.String,
             name: 'option',
             description: 'Missing arguments',
-            required: true
+            required: true,
+            autocomplete: true
         },
 		{
 			type: ApplicationCommandOptionType.User,
 			name: 'user',
 			description: 'Mention an user',
-			required: true
-		},
-        {
-            type: ApplicationCommandOptionType.Role,
-            name: 'role',
-            description: 'mention a role',
-            required: true
-        }
+			required: false
+		}
 	],
 } as APIApplicationCommand;
