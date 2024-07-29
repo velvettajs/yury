@@ -1,7 +1,7 @@
 import type BaseClient from '#lib/BaseClient.js';
 import Event from '#lib/structures/Event.js';
 import { redBright, underline } from 'colorette';
-import { ActivityType } from 'discord.js';
+import { ActivityType, Emoji } from 'discord.js';
 
 export default class extends Event {
 	public constructor(client: BaseClient) {
@@ -13,10 +13,9 @@ export default class extends Event {
 
 	public run() {
 		this.client.user.setPresence({
-			activities: [{ name: `Verifying users`, type: ActivityType.Streaming, url: 'https://twitch.tv/xqc' }],
+			activities: [{ name: `🍡 velvetta?` }],
 			status: 'idle'
 		});
-
 		console.log(`Logged in as ${redBright(underline(`${this.client.user.tag}`))}`);
 		console.log(`Loaded ${this.client.commands.size} commands & ${this.client.events.size} events!`);
 	}
