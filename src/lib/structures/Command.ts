@@ -39,7 +39,7 @@ export default abstract class Command {
 	}
 
 	public success(interaction: CommandInteraction<'cached' | 'raw'>, msg: string) {
-		const embed = new EmbedBuilder().setColor('Green').setDescription(msg);
+		const embed = new EmbedBuilder().setColor(0xFBFBF9).setDescription(msg);
 		return interaction.reply({ embeds: [embed] });
 	}
 	public error(interaction: CommandInteraction<'cached' | 'raw'>, msg: string) {
