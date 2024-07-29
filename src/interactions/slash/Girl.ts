@@ -10,7 +10,7 @@ export default {
             type: ApplicationCommandOptionType.String,
             name: 'option',
             description: 'Choose a type of operation',
-            required: false,
+            required: true,
             autocomplete: true
         },
         {
