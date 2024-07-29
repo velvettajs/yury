@@ -77,7 +77,7 @@ export default class extends Event {
 				const replies = [
 					'An error has occured when executing this command.',
 					'If the issue persists, please contact us in our Support Server.',
-					'https://lovver.lat/discord'
+					'https://velvetta.us/discord'
 				].join('\n');
 
 				if (interaction.deferred) return interaction.editReply({ content: replies });

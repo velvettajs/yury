@@ -16,7 +16,10 @@ export const Cdn: CdnOptions = {
 	region: 'auto',
 	endpoint: process.env.R2_ENDPOINT as string,
 	credentials: {
-		accessKeyId: process.env.R2_ACCESS_KEY as string,
+		accessKeyId: process.env.R2_ACCESS_KEY_ID as string,
 		secretAccessKey: process.env.R2_SECRET_ACCESS_KEY as string
 	}
 };
+
+export const Bucket: string = process.env.R2_BUCKET_NAME as string;
+export const CdnUrl: string = process.env.CDN_URL as string;

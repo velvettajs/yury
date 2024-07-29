@@ -6,11 +6,11 @@ export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
 			name: 'help',
-			description: 'Shows help information and commands.',
+			description: 'Shows help information and commands.'
 		});
 	}
 
 	public execute(interaction: ChatInputCommandInteraction<'cached' | 'raw'>) {
-		return interaction.reply({ content: 'https://www.lovver.lat' });
+		return interaction.reply({ content: 'https://www.velvetta.us' });
 	}
 }

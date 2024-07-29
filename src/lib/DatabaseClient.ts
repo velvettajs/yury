@@ -1,6 +1,6 @@
 import { neon } from '@neondatabase/serverless';
 import { drizzle, type NeonHttpDatabase } from 'drizzle-orm/neon-http';
-import { Database as Configuration } from './Configuration';
+import { Database as Configuration } from './Configuration.js';
 class DatabaseClient {
 	private db: NeonHttpDatabase<Record<string, never>>;
 

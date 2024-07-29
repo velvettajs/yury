@@ -2,21 +2,21 @@ import { type APIApplicationCommand, ApplicationCommandOptionType, ApplicationCo
 
 export default {
 	name: 'tag',
-	description: 'Create a tag in database.',
+	description: 'Perfom Tag operations in database.',
 	type: ApplicationCommandType.ChatInput,
 	dm_permission: true,
 	options: [
 		{
 			type: ApplicationCommandOptionType.String,
 			name: 'option',
-			description: 'nose',
+			description: 'Choose a type of operation',
 			required: true,
 			autocomplete: true
 		},
 		{
 			type: ApplicationCommandOptionType.String,
 			name: 'name',
-			description: 'Name of tag.',
+			description: 'Tag name',
 			required: false,
 			autocomplete: true
 		}

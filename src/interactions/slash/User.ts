@@ -2,7 +2,7 @@ import { type APIApplicationCommand, ApplicationCommandOptionType, ApplicationCo
 
 export default {
 	name: 'user',
-	description: 'Create a tag in database.',
+	description: 'Perform user operations in database.',
 	type: ApplicationCommandType.ChatInput,
 	dm_permission: true,
 	options: [

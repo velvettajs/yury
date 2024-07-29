@@ -15,7 +15,6 @@ export default class extends Command {
 	public async execute(interaction: ChatInputCommandInteraction<'cached' | 'raw'>) {
 		const option = interaction.options.getString('option');
 		const user = interaction.options.getUser('user');
-
 		try {
 			switch (option) {
 				case 'list':

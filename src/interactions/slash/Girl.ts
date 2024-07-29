@@ -2,28 +2,28 @@ import { type APIApplicationCommand, ApplicationCommandOptionType, ApplicationCo
 
 export default {
     name: 'girl',
-    description: 'Shows help information and commands.',
+    description: 'Perform Girl operations in database.',
     type: ApplicationCommandType.ChatInput,
     dm_permission: true,
     options: [
         {
             type: ApplicationCommandOptionType.String,
             name: 'option',
-            description: 'osimp ponele algo a estas mierdas',
-            required: true,
-            autocomplete: true
-        },
-        {
-            type: ApplicationCommandOptionType.String,
-            name: 'name',
-            description: 'lo de arriba x2',
+            description: 'Choose a type of operation',
             required: false,
             autocomplete: true
         },
         {
             type: ApplicationCommandOptionType.String,
+            name: 'name',
+            description: 'Girl name',
+            required: false,
+            autocomplete: false
+        },
+        {
+            type: ApplicationCommandOptionType.Attachment,
             name: 'avatar',
-            description: 'nose',
+            description: 'Avatar attachment',
             required: false
         }
     ]
