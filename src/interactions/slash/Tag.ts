@@ -17,7 +17,8 @@ export default {
 			type: ApplicationCommandOptionType.String,
 			name: 'name',
 			description: 'Name of tag.',
-			required: false
+			required: false,
+			autocomplete: true
 		}
 	],
 } as APIApplicationCommand;
