@@ -18,8 +18,6 @@ class Cdn {
 				Body: fileBuffer,
 				ContentType: contentType
 			};
-			console.log(UploadParams);
-			console.log(Configuration);
 			const command = new PutObjectCommand(UploadParams);
 			await this.s3Client.send(command);
 			return `${folder}/${filename}`;

@@ -18,7 +18,7 @@ export default abstract class Command {
 	public readonly disabled: boolean;
 	public readonly guildOnly: boolean;
 	public readonly ownerOnly: boolean;
-
+	
 	// eslint-disable-next-line no-undef
 	public constructor(client: BaseClient, options: CommandOptions) {
 		this.client = client;

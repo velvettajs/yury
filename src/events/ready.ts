@@ -1,8 +1,6 @@
 import type BaseClient from '#lib/BaseClient.js';
 import Event from '#lib/structures/Event.js';
 import { redBright, underline } from 'colorette';
-import { ActivityType, Emoji } from 'discord.js';
-
 export default class extends Event {
 	public constructor(client: BaseClient) {
 		super(client, {
